@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Serie>
+
+@{
+    ViewData["Title"] = "Index";
+    int exerciseId = (int)ViewBag.exerciseId;
+    int trainingId = (int)ViewBag.trainingId;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Series</h1>
+
+<p>
+    <a asp-action="Create" asp-route-id="@exerciseId">Add new series</a>
+</p>
+<p>
+    <a asp-controller="Excercises" asp-action="Index" asp-route-id="@trainingId">Back to exercises</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Number of repetitions
+            </th>
+            <th>
+                Weight
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            @if (item.Excercise.id == exerciseId)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.numberOfRepetitions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.weight)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                </td>
+            </tr>
+            }
+}
+    </tbody>
+</table>

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Excercise>
+
+@{
+    ViewData["Title"] = "Index";
+    int trainingId = (int)ViewBag.trainingId;
+    string userId = ViewBag.userId;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Exercises</h1>
+
+<p>
+    <a asp-action="Create" asp-route-id="@trainingId" >Add new exercise</a>
+</p>
+<p>
+    <a asp-controller="Trainings" asp-action="Index" asp-route-id="@userId">Back to trainings</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name of exercise
+            </th>
+            <th>
+                Muscle targer
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            @if (item.Training.id == trainingId)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.muscleTarget)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                        <a asp-area="" asp-controller="Series" asp-action="Index" asp-route-id="@item.id">Show series</a> |
+                        <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                    </td>
+                </tr>
+            }
+}
+    </tbody>
+</table>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Training>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Your training's history</h1>
+
+<p>
+    <a asp-action="Create">Add new training</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Date of training
+            </th>
+            <th>
+                Duration of training(in hours)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            @if (item.User.UserName == User.Identity.Name)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.durationTime)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                        <a asp-area="" asp-controller="Excercises" asp-action="Index" asp-route-id="@item.id">Show excercises</a> |
+                        <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                    </td>
+                </tr>
+            }
+}
+    </tbody>
+</table>
